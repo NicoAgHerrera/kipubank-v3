@@ -61,16 +61,6 @@ El contrato acepta:
 
 ## ⚙️ 2. Despliegue
 
-### 🧩 Requisitos Previos
-
-- **Remix IDE** o **Foundry (`forge`)**  
-- **MetaMask** configurado en **Sepolia** u otra testnet compatible  
-- **Fondos de testnet ETH** para gas  
-- **Dirección de la UniswapV2Factory** y tokens **USDC / WETH** en la red elegida  
-
----
-# ⚙️ Despliegue de KipuBankV3
-
 ## 🧩 Requisitos Previos
 
 - **Foundry** (`forge`) correctamente instalado y configurado.  
