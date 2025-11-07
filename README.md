@@ -59,7 +59,7 @@ El contrato acepta:
 
 ---
 
-# ⚙️ Despliegue de KipuBank V3
+## ⚙️ 2. Despliegue de KipuBank V3
 
 ## 🧩 Requisitos Previos
 
