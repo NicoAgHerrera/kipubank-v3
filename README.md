@@ -1,10 +1,10 @@
-# 🏦 KipuBank V3 — Banco DeFi Unificado en USDC con Uniswap V2
+# 🏦 KipuBank V3 - Banco DeFi Unificado en USDC con Uniswap V2
 
 ## 📘 Descripción General
 
 **KipuBankV3** es la evolución natural del proyecto **KipuBankV2**, transformando un banco multi-token con oráculos en una **aplicación DeFi real**, totalmente integrada con **Uniswap V2**.
 
-Su objetivo es **unificar todos los depósitos —ya sean ETH o tokens ERC-20— en un balance único denominado en USDC**, garantizando la liquidez, la transparencia y la consistencia contable.
+Su objetivo es **unificar todos los depósitos, ya sean ETH o tokens ERC-20, en un balance único denominado en USDC**, garantizando la liquidez, la transparencia y la consistencia contable.
 
 Este nuevo diseño elimina por completo los oráculos de precios y utiliza el mercado real de Uniswap como fuente de valor, consolidando el aprendizaje del módulo de **composabilidad y protocolos DeFi**.
 
