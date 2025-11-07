@@ -59,84 +59,70 @@ El contrato acepta:
 
 ---
 
-## ⚙️ 2. Despliegue
+# ⚙️ Despliegue de KipuBank V3
 
 ## 🧩 Requisitos Previos
 
-- **Foundry** (`forge`) correctamente instalado y configurado.  
-- **MetaMask** o **clave privada** con fondos de **ETH de testnet**.  
-- **Red Sepolia** (u otra testnet compatible) conectada al **RPC correspondiente**.  
-- **Direcciones válidas** de:
-  - UniswapV2Factory  
-  - USDC  
-  - WETH9  
-
+- **Foundry** (`forge`) instalado.
+- **Clave privada** con **ETH de Sepolia**.
+- **RPC de Sepolia** (Infura, Alchemy o similar).
+- **API Key de Etherscan** (para verificación automática).
 ---
 
-## 🧱 Proceso de Despliegue (Foundry)
+## 🧱 Proceso de Despliegue (Foundry + Script)
 
-### 1. Clonar el repositorio
-
+### 1) Clonar el repo
 ```bash
 git clone https://github.com/<usuario>/kipubank-v3.git
 cd kipubank-v3
 ```
 
----
-
-### 2. Instalar dependencias necesarias
-
+### 2) Instalar dependencias
 ```bash
 forge install openzeppelin/openzeppelin-contracts
 forge install Uniswap/v2-core
 forge install Uniswap/v2-periphery
 ```
 
----
+### 3) Revisar el script de deploy  
+Editar **`script/DeployKipuBankV3.s.sol`** y confirmar:
 
-### 3. Compilar el proyecto
+- **Direcciones en Sepolia** (ya seteadas en el script):
+  - `factory` (Uniswap V2 Factory): `0xDAe3a9CbFe88dB2a9F7A189AfEA5a3B08347C07b`
+  - `usdc`: `0xf08a50178dfcde18524640ea6618a1f965821715`
+  - `weth`: `0x7b79995e5f793a07bc00c21412e50ecae098e7f9`
+- **Límites (en USDC, 6 decimales)**:
+  ```solidity
+  uint256 bankCap     = 1_000_000 * 10**6; // 1M USDC
+  uint256 withdrawCap =    10_000 * 10**6; // 10k USDC
+  ```
 
-```nginx
+> Nota: los límites están en **USDC** (6 decimales). Tener 0.09 ETH no afecta estos topes.
+
+### 4) Compilar
+```bash
 forge build
 ```
 
----
-
-### 4. Desplegar el contrato
-
-Reemplazá los valores entre `< >` con los reales.
-
-```php-template
-forge create src/KipuBankV3.sol:KipuBankV3   --rpc-url <RPC_URL>   --private-key <PRIVATE_KEY>   --constructor-args <FACTORY_ADDRESS> <USDC_ADDRESS> <WETH_ADDRESS> <BANK_CAP_USDC> <WITHDRAW_CAP_USDC> --broadcast
+### 5) Desplegar (vía script)
+```bash
+forge script script/DeployKipuBankV3.s.sol   --rpc-url https://sepolia.infura.io/v3/<API_KEY>   --private-key 0xTU_PRIVATE_KEY   --broadcast
 ```
 
-#### Ejemplo:
+> Al finalizar, Foundry muestra la **dirección del contrato**.  
+> Ejemplo real del despliegue: `0x5dBe19153CC0b9C5750aE662109E7Cd59C266381` (Sepolia).
 
-```lua
-forge create src/KipuBankV3.sol:KipuBankV3   --rpc-url https://sepolia.infura.io/v3/<API_KEY>   --private-key 0xABCDEF...   --constructor-args 0xUniswapFactory 0xUSDC 0xWETH 1000000000000 1000000000000 --broadcast
+---
+
+## 🔍 Verificación en Etherscan
+
+### Opción A — Automática (recomendada)
+Si ya tenés `ETHERSCAN_API_KEY` en tu entorno:
+```bash
+forge script script/DeployKipuBankV3.s.sol   --rpc-url $SEPOLIA_RPC_URL   --private-key $PRIVATE_KEY   --broadcast   --verify   --etherscan-api-key $ETHERSCAN_API_KEY -vvvv
 ```
 
 ---
-
-### 5. Guardar la dirección del contrato desplegado
-
-Anotá o copiá la **dirección del contrato** que devuelve el comando anterior para futuras verificaciones y pruebas.
-
----
-
-### 🔍 Verificación en Etherscan / Blockscout
-
-1. Copiar la dirección del contrato desplegado.  
-2. Ir a la pestaña **Verify & Publish Contract** del explorador.  
-3. Configurar:
-- **Compilador:** Solidity 0.8.30  
-- **Optimization:** Yes  
-- **License:** MIT  
-4. Pegar el código fuente y verificar.  
-5. El explorador mostrará todas las funciones públicas para interacción directa.
-
----
-
 ## 🧭 3. Interacción
 
 ### 💰 Depósitos
